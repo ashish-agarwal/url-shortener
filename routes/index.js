@@ -6,13 +6,15 @@ const shortid = require('shortid');
 const baseUrl = 'http://localhost:3000/';
 const urlCodes = {};
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
+
+router.all('/', shortenURL);
+
+function shortenURL(req, res) {
 
   const longUrl = req.query.url || req.body.url;
 
   if (!longUrl) {
-    return res.send({ message: 'No url found to shorten' });
+    return res.status(400).send({ message: 'No url found to shorten' });
   } else if (urlCodes[longUrl]) {
     return res.send({ result: `${baseUrl}/${urlCodes[longUrl]}` });
   }
@@ -22,6 +24,6 @@ router.get('/', (req, res, next) => {
   urlCodes[longUrl] = urlCode;
 
   return res.send({ result: `${baseUrl}/${urlCodes[longUrl]}` });
-});
+}
 
 module.exports = router;
