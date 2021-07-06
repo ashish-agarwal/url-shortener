@@ -16,14 +16,14 @@ function shortenURL(req, res) {
   if (!longUrl) {
     return res.status(400).send({ message: 'No url found to shorten' });
   } else if (urlCodes[longUrl]) {
-    return res.send({ result: `${baseUrl}/${urlCodes[longUrl]}` });
+    return res.send({ result: `${baseUrl}${urlCodes[longUrl]}` });
   }
 
   const urlCode = shortid.generate();
 
   urlCodes[longUrl] = urlCode;
 
-  return res.send({ result: `${baseUrl}/${urlCodes[longUrl]}` });
+  return res.send({ result: `${baseUrl}${urlCodes[longUrl]}` });
 }
 
 module.exports = router;
